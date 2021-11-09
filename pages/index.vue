@@ -66,7 +66,7 @@ export default {
           const infos = await getPokemonInfo(index + 1)
           Object.assign(pokemon, {
             id: index + 1,
-            type: infos.types[0].type.name,
+            types: infos.types.map(type => type.type.name),
             sprite: infos.sprites.front_default
           })
           return pokemon
