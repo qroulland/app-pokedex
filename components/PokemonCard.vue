@@ -26,13 +26,15 @@
       >
     </div>
     <div
-      class="ml-auto text-white text-3xl font-bold"
+      class="ml-auto mr-6 text-white text-3xl font-bold"
     >
       #{{ ('00' + pokemon.id).slice(-3) }}
     </div>
-    <div class="flex ml-auto">
-      <div>
+    <div class="flex">
+      <div class="p-4 rounded-full bg-yellow-400 w-8 h-8 flex items-center justify-center text-white">
         <font-awesome-icon :icon="['far', 'eye']" />
+      </div>
+      <div class="p-4 rounded-full bg-blue-600 w-8 h-8 flex items-center justify-center ml-3 text-white">
         <font-awesome-icon icon="plus" />
       </div>
     </div>
