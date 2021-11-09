@@ -7,11 +7,23 @@
     <div class="flex w-full">
       <sidebar-team />
       <div class="flex flex-col w-1/2 md:w-full mt-32 ml-1/4 items-center">
-        <pokemon-card
+        <div
           v-for="pokemon in pokemons"
           :key="pokemon.id"
-          :pokemon="pokemon"
-        />
+          class="flex w-full justify-center items-center container-card"
+        >
+          <pokemon-card
+            :pokemon="pokemon"
+          />
+          <img
+            :src="inMyTeam(pokemon) ? require('./../assets/svg/pokeball.svg') : 'https://img.icons8.com/color/48/000000/open-pokeball--v2.png'"
+            alt="Pokeball"
+            class="ml-5"
+            width="50"
+            height="50"
+            @click="inMyTeam(pokemon) ? deleteInMyTeam(pokemon) : addInMyTeam(pokemon)"
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -36,7 +48,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      pokemons: 'getPokemons'
+      pokemons: 'getPokemons',
+      team: 'getTeam'
     })
   },
   created () {
@@ -67,7 +80,32 @@ export default {
       await this.$store.dispatch('setValue', { pokemons })
       // app is ready to be displayed !
       this.ready = true
+    },
+    inMyTeam (pokemon) {
+      return this.team.some(e => e.id === pokemon.id)
+    },
+    async addInMyTeam (pokemon) {
+      await this.$store.dispatch('setValue', { team: [...this.team, pokemon] })
+    },
+    async deleteInMyTeam (pokemon) {
+      const myTeam = [...this.team]
+      const index = await this.team.indexOf(pokemon)
+      myTeam.splice(index, 1)
+
+      await this.$store.dispatch('setValue', { team: myTeam })
     }
   }
 }
 </script>
+
+<style scoped>
+.container-card img {
+  opacity: 25%;
+  transition: 0.3s all;
+}
+
+.container-card:hover img {
+  opacity: 100%;
+  cursor: pointer;
+}
+</style>

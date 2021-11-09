@@ -1,6 +1,7 @@
 // initial state
 const state = () => ({
   pokemons: [],
+  team: [],
   types: [
     {
       type: 'grass',
@@ -63,7 +64,8 @@ const state = () => ({
 // getters
 const getters = {
   getPokemons: state => state.pokemons,
-  getTypes: state => state.types
+  getTypes: state => state.types,
+  getTeam: state => state.team
 }
 
 // actions
