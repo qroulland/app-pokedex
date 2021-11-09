@@ -1,3 +1,5 @@
+import VuexPersistence from 'vuex-persist'
+
 // initial state
 const state = () => ({
   pokemons: [],
@@ -83,10 +85,16 @@ const mutations = {
   }
 }
 
+// plugins
+const plugins = [
+  new VuexPersistence().plugin
+]
+
 // eslint-disable-next-line no-unused-vars
 export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
+  plugins
 }
