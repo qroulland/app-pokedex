@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-navbar />
-    <Nuxt id="contentWrapper" />
+    <Nuxt
+      id="contentWrapper"
+    />
   </div>
 </template>
 

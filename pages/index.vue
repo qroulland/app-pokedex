@@ -1,10 +1,10 @@
 <template>
   <div
     v-if="ready"
-    class="flex w-full"
+    class="flex w-full mt-24 md:mt-32"
   >
     <sidebar-team />
-    <div class="flex flex-col w-full mt-24 mb-24 md:mb-8 md:mt-32 ml-1/4 items-center">
+    <div class="flex flex-col w-full mb-24 md:mb-8 ml-1/4 items-center">
       <div
         v-for="pokemon in pokemons"
         :key="pokemon.id"
