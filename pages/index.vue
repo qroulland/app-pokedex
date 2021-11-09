@@ -1,29 +1,27 @@
 <template>
   <div
     v-if="ready"
-    class="flex flex-col items-center"
+    class="flex w-full"
   >
-    <Navbar />
-    <div class="flex w-full">
-      <sidebar-team />
-      <div class="flex flex-col w-1/2 md:w-full mt-32 ml-1/4 items-center">
-        <div
-          v-for="pokemon in pokemons"
-          :key="pokemon.id"
-          class="flex w-full justify-center items-center container-card"
+    <sidebar-team />
+    <div class="flex flex-col w-full mt-24 mb-24 md:mb-8 md:mt-32 ml-1/4 items-center">
+      <div
+        v-for="pokemon in pokemons"
+        :key="pokemon.id"
+        class="flex w-full justify-center items-center container-card"
+      >
+        <pokemon-card
+          :pokemon="pokemon"
+          class="order-2 md:order-1"
+        />
+        <img
+          :src="inMyTeam(pokemon) ? require('./../assets/svg/pokeball.svg') : 'https://img.icons8.com/color/48/000000/open-pokeball--v2.png'"
+          alt="Pokeball"
+          class="md:ml-5 mr-3 order-1 md:order-2"
+          width="50"
+          height="50"
+          @click="inMyTeam(pokemon) ? deleteInMyTeam(pokemon) : addInMyTeam(pokemon)"
         >
-          <pokemon-card
-            :pokemon="pokemon"
-          />
-          <img
-            :src="inMyTeam(pokemon) ? require('./../assets/svg/pokeball.svg') : 'https://img.icons8.com/color/48/000000/open-pokeball--v2.png'"
-            alt="Pokeball"
-            class="ml-5"
-            width="50"
-            height="50"
-            @click="inMyTeam(pokemon) ? deleteInMyTeam(pokemon) : addInMyTeam(pokemon)"
-          >
-        </div>
       </div>
     </div>
   </div>
@@ -89,7 +87,7 @@ export default {
     },
     async deleteInMyTeam (pokemon) {
       const myTeam = [...this.team]
-      const index = await this.team.indexOf(pokemon)
+      const index = await myTeam.indexOf(pokemon)
       myTeam.splice(index, 1)
 
       await this.$store.dispatch('setValue', { team: myTeam })

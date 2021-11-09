@@ -1,6 +1,7 @@
 <template>
-  <div
-    class="flex rounded-3xl px-8 items-center my-2 w-4/5 pokemonCard"
+  <nuxt-link
+    :to="`/${pokemon.name}`"
+    class="flex rounded-3xl px-3 md:px-8 items-center my-2 w-4/5 pokemonCard"
     :class="getColor('background', pokemon.types[0])"
   >
     <img
@@ -9,7 +10,7 @@
       width="100"
       height="100"
     >
-    <div class="ml-8">
+    <div class="ml-3 md:ml-8">
       <div
         class="text-white text-xl font-bold"
       >
@@ -29,11 +30,11 @@
       </div>
     </div>
     <div
-      class="ml-auto mr-6 text-white text-3xl font-bold"
+      class="ml-auto mr-6 text-white text-3xl font-bold hidden md:block"
     >
       #{{ ('00' + pokemon.id).slice(-3) }}
     </div>
-  </div>
+  </nuxt-link>
 </template>
 
 <script>
