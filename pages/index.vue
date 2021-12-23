@@ -51,7 +51,12 @@ export default {
     })
   },
   created () {
-    this.findPokemons()
+    if (this.pokemons.lenght === 0) {
+      this.findPokemons()
+    } else {
+      this.ready = true
+      this.$nuxt.$emit('ready')
+    }
   },
   methods: {
     async findPokemons () {
@@ -78,6 +83,7 @@ export default {
       await this.$store.dispatch('setValue', { pokemons })
       // app is ready to be displayed !
       this.ready = true
+      this.$nuxt.$emit('ready')
     },
     inMyTeam (pokemon) {
       return this.team.some(e => e.id === pokemon.id)
