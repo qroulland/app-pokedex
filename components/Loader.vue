@@ -1,13 +1,15 @@
 <template>
-  <div class="loader" v-if="loading">
+  <div v-if="loading" class="loader">
     <img
       :src="require('./../assets/svg/pokeball.svg')"
       alt="Pokeball"
       class=""
       width="150"
       height="150"
-    />
-    <p class="text-white text-2xl mt-8 font-bold">Loading</p>
+    >
+    <p class="text-white text-2xl mt-8 font-bold">
+      Loading
+    </p>
   </div>
 </template>
 

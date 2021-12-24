@@ -3,7 +3,7 @@
     v-if="ready"
     class="flex w-full mt-24 md:mt-32"
   >
-    <sidebar-team />
+    <sidebar-team :team="team"/>
     <div class="flex flex-col w-full mb-24 md:mb-8 ml-1/4 items-center">
       <div
         v-for="pokemon in pokemons"

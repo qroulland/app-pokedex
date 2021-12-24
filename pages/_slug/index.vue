@@ -3,7 +3,7 @@
     class="flex flex-col w-full items-center md:mt-20"
   >
     <div
-      class="w-full flex flex-col justify-center items-center py-4"
+      class="w-full mt-20 md:mt-0 flex flex-col justify-center items-center py-4"
       :class="getColor('background', pokemon.types[0].type.name)"
     >
       <img
@@ -31,7 +31,7 @@
         >
       </div>
     </div>
-    <div class="flex w-2/3 justify-around md:mt-4">
+    <div class="flex w-2/3 justify-around md:my-4">
       <img
         :src="pokemon.sprites.front_shiny"
         :alt="`Sprite pokemon ${pokemon.id}`"
@@ -45,8 +45,8 @@
         height="125"
       >
     </div>
-    <div class="flex w-2/3 justify-around md:mt-4">
-      <div class="shadow w-full text-center mx-4 rounded-lg">
+    <div class="flex flex-col md:flex-row w-full md:w-2/3 justify-around my-4 ">
+      <div class="shadow-md w-4/5 md:w-full text-center mb-6 mx-auto md:mb-0 md:mx-4 rounded-lg">
         <div
           class="font-bold text-3xl my-3 px-16"
           :class="getColor('text', pokemon.types[0].type.name)"
@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="shadow w-full text-center mx-4 rounded-lg">
+      <div class="shadow-md w-4/5 md:w-full text-center mx-auto md:mx-4 rounded-lg">
         <div
           class="font-bold text-3xl my-3 px-16"
           :class="getColor('text', pokemon.types[0].type.name)"
@@ -127,6 +127,9 @@ export default {
     ...mapGetters({
       types: 'getTypes'
     })
+  },
+  created () {
+    this.$nuxt.$emit('ready')
   },
   methods: {
     getColor (elt, pokemonType) {
