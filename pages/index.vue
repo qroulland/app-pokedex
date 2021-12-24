@@ -3,10 +3,10 @@
     v-if="ready"
     class="flex w-full mt-24 md:mt-32"
   >
-    <sidebar-team :team="team"/>
+    <sidebar-team :team="team" />
     <div class="flex flex-col w-full mb-24 md:mb-8 ml-1/4 items-center">
       <div
-        v-for="pokemon in pokemons"
+        v-for="pokemon in pokemonsList"
         :key="pokemon.id"
         class="flex w-full justify-center items-center container-card"
       >
@@ -41,7 +41,8 @@ export default {
   },
   data () {
     return {
-      ready: false
+      ready: false,
+      pokemonsList: []
     }
   },
   computed: {
@@ -51,12 +52,18 @@ export default {
     })
   },
   created () {
-    if (this.pokemons.lenght === 0) {
+    this.pokemonsList = this.pokemons
+
+    if (this.pokemonsList.lenght === 0) {
       this.findPokemons()
     } else {
       this.ready = true
       this.$nuxt.$emit('ready')
     }
+
+    this.$nuxt.$on('filterList', (payload) => {
+      this.pokemonsList = this.pokemons.filter(pokemon => pokemon.name.includes(payload))
+    })
   },
   methods: {
     async findPokemons () {
