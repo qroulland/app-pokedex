@@ -3,6 +3,7 @@
     <v-navbar />
     <Nuxt
       id="contentWrapper"
+      class="mt-24"
     />
     <v-loader :loading="loading" />
   </div>
@@ -25,6 +26,7 @@ export default {
   },
   created () {
     this.$nuxt.$on('ready', () => {
+      console.log('Disable loader')
       this.loading = false
     })
   }

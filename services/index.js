@@ -8,8 +8,13 @@ async function getPokemons () {
 }
 
 async function getPokemonInfo (id) {
-  const { data } = await axios.get(`${API_URL}/pokemon/${id}`)
-  return data
+  try {
+    const { data } = await axios.get(`${API_URL}/pokemon/${id}`)
+    return data
+  } catch (err) {
+    console.log('Error when fetching details of pokemon with id: ' + id)
+    return null
+  }
 }
 
 export {

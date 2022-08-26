@@ -2,8 +2,7 @@
   <div
     id="teamBar"
     class="flex fixed bottom-0 w-full justify-around items-center bg-gray-200
-    md:h-screen md:sticky md:top-0 z-10 md:py-4 md:flex-col md:w-1/6 md:-mt-32
-    md:pt-24"
+    md:h-screen md:sticky md:top-0 z-10 md:pt-24 md:flex-col md:w-1/6 md:-mt-24"
   >
     <div
       v-for="elt in 6"

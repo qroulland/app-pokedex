@@ -20,7 +20,7 @@
         <img
           v-for="(type, index) in pokemon.types"
           :key="type"
-          :src="require(`./../assets/svg/${type}.svg`)"
+          :src="require(`@/assets/svg/${type}.svg`)"
           :alt="`Type pokemon ${pokemon.id}`"
           width="32"
           height="32"

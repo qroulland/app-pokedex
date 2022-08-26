@@ -2,125 +2,41 @@
   <div
     class="flex flex-col w-full items-center md:mt-20"
   >
-    <div
-      class="w-full mt-20 md:mt-0 flex flex-col justify-center items-center py-4"
-      :class="getColor('background', pokemon.types[0].type.name)"
-    >
-      <img
-        :src="pokemon.sprites.front_default"
-        :alt="`Pokemon ${pokemon.id}`"
-        width="200"
-        height="200"
-      >
-      <div
-        class="text-white text-xl font-bold"
-      >
-        {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
-        #{{ ('00' + pokemon.id).slice(-3) }}
-      </div>
-      <div class="flex">
-        <img
-          v-for="(type, index) in pokemon.types.map(type => type.type.name)"
-          :key="type"
-          :src="require(`./../../assets/svg/${type}.svg`)"
-          :alt="`Type pokemon ${pokemon.id}`"
-          width="32"
-          height="32"
-          class="p-2 rounded-full my-2"
-          :class="[getColor('icon', type), {'ml-2': index > 0}]"
-        >
-      </div>
-    </div>
-    <div class="flex w-2/3 justify-around md:my-4">
-      <img
-        :src="pokemon.sprites.front_shiny"
-        :alt="`Sprite pokemon ${pokemon.id}`"
-        width="125"
-        height="125"
-      >
-      <img
-        :src="pokemon.sprites.back_shiny"
-        :alt="`Sprite pokemon ${pokemon.id}`"
-        width="125"
-        height="125"
-      >
-    </div>
-    <div class="flex flex-col md:flex-row w-full md:w-2/3 justify-around my-4 ">
-      <div class="shadow-md w-4/5 md:w-full text-center mb-6 mx-auto md:mb-0 md:mx-4 rounded-lg">
-        <div
-          class="font-bold text-3xl my-3 px-16"
-          :class="getColor('text', pokemon.types[0].type.name)"
-        >
-          Pokedex data
-          <div
-            v-for="(value, key) in pokedexData"
-            :key="key"
-            class="text-black text-base font-normal text-left mb-4 mt-8 flex justify-between"
-          >
-            {{ value }}:
-            <span
-              class="font-bold"
-              :class="getColor('text', pokemon.types[0].type.name)"
-            >
-              {{ pokemon[key] }}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="shadow-md w-4/5 md:w-full text-center mx-auto md:mx-4 rounded-lg">
-        <div
-          class="font-bold text-3xl my-3 px-16"
-          :class="getColor('text', pokemon.types[0].type.name)"
-        >
-          <div class="mb-8">
-            Base Stats
-          </div>
-          <div
-            v-for="stat in pokemon.stats"
-            :key="stat.stat.name"
-            class="text-black text-base font-normal text-left mb-4 flex justify-between"
-          >
-            {{ stat.stat.name.charAt(0).toUpperCase() + stat.stat.name.slice(1) }}:
-            <span
-              class="font-bold"
-              :class="getColor('text', pokemon.types[0].type.name)"
-            >
-              {{ stat.base_stat }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Hero :prevPokemon="prevPokemon" :pokemon="pokemon" :nextPokemon="nextPokemon" :getColor="getColor" />
+    <Details :pokemon="pokemon" :color="getColor ('text', pokemon.types[0])" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import { getPokemonInfo } from '@/services/index'
+import Hero from '@/components/PokemonDetails/Hero.vue'
+import Details from '@/components/PokemonDetails/Details.vue'
+
 export default {
   name: 'PokemonDetails',
-  components: {},
+  components: {
+    Hero,
+    Details
+  },
   async asyncData ({ params, error }) {
     try {
       const pokemon = await getPokemonInfo(params.slug)
+
       if (!pokemon) {
         throw new Error('Not found')
       }
 
+      const prevPokemon = await getPokemonInfo(pokemon.id - 1)
+      const nextPokemon = await getPokemonInfo(pokemon.id + 1)
+
       return {
-        pokemon
+        prevPokemon,
+        pokemon,
+        nextPokemon
       }
     } catch (err) {
       return error({ message: err, statusCode: 404 })
-    }
-  },
-  data () {
-    return {
-      pokedexData: {
-        base_experience: 'Base experience',
-        height: 'Height',
-        weight: 'Weight'
-      }
     }
   },
   computed: {

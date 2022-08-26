@@ -1,26 +1,27 @@
 <template>
-  <div
-    v-if="ready"
-    class="flex w-full mt-24 md:mt-32"
-  >
+  <div v-if="ready" class="flex w-full">
     <sidebar-team :team="team" />
-    <div class="flex flex-col w-full mb-24 md:mb-8 ml-1/4 items-center">
+    <div class="flex flex-col w-full mb-24 md:mb-8 ml-1/4 items-center mt-8 px-8">
+      <v-filters />
       <div
-        v-for="pokemon in pokemonsList"
+        v-for="pokemon in pokemonList"
         :key="pokemon.id"
-        class="flex w-full justify-center items-center container-card"
+        class="flex w-full justify-between items-center container-card"
       >
-        <pokemon-card
-          :pokemon="pokemon"
-          class="order-2 md:order-1"
-        />
+        <pokemon-card :pokemon="pokemon" class="order-2 md:order-1 w-full" />
         <img
-          :src="inMyTeam(pokemon) ? require('./../assets/svg/pokeball.svg') : 'https://img.icons8.com/color/48/000000/open-pokeball--v2.png'"
+          :src="
+            inMyTeam(pokemon)
+              ? require('@/assets/svg/pokeball.svg')
+              : 'https://img.icons8.com/color/48/000000/open-pokeball--v2.png'
+          "
           alt="Pokeball"
-          class="md:ml-5 mr-3 order-1 md:order-2"
+          class="order-1 md:order-2 ml-8"
           width="50"
           height="50"
-          @click="inMyTeam(pokemon) ? deleteInMyTeam(pokemon) : addInMyTeam(pokemon)"
+          @click="
+            inMyTeam(pokemon) ? deleteInMyTeam(pokemon) : addInMyTeam(pokemon)
+          "
         >
       </div>
     </div>
@@ -30,40 +31,49 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getPokemons, getPokemonInfo } from '@/services/index'
-import PokemonCard from '~/components/PokemonCard.vue'
+import PokemonCard from '~/components/Home/PokemonCard.vue'
 import SidebarTeam from '~/components/SidebarTeam.vue'
+import Filters from '~/components/Home/Filters.vue'
 
 export default {
   name: 'Index',
   components: {
     'pokemon-card': PokemonCard,
-    'sidebar-team': SidebarTeam
+    'sidebar-team': SidebarTeam,
+    'v-filters': Filters
   },
   data () {
     return {
       ready: false,
-      pokemonsList: []
+      pokemonList: []
     }
   },
   computed: {
     ...mapGetters({
       pokemons: 'getPokemons',
-      team: 'getTeam'
+      team: 'getTeam',
+      searchPokemon: 'searchPokemon',
+      getPokemonsByTypes: 'getPokemonsByTypes'
     })
   },
   created () {
-    this.pokemonsList = this.pokemons
+    if (process.client) {
+      if (this.pokemons.length === 0) {
+        this.findPokemons()
+      } else {
+        this.pokemonList = this.pokemons
+        this.ready = true
+        this.$nuxt.$emit('ready')
+      }
 
-    if (this.pokemonsList.lenght === 0) {
-      this.findPokemons()
-    } else {
-      this.ready = true
-      this.$nuxt.$emit('ready')
+      this.$nuxt.$on('filterSearch', (payload) => {
+        this.pokemonList = this.searchPokemon(payload)
+      })
+
+      this.$nuxt.$on('filterByTypes', (payload) => {
+        this.pokemonList = this.getPokemonsByTypes(payload)
+      })
     }
-
-    this.$nuxt.$on('filterList', (payload) => {
-      this.pokemonsList = this.pokemons.filter(pokemon => pokemon.name.includes(payload))
-    })
   },
   methods: {
     async findPokemons () {
@@ -89,6 +99,7 @@ export default {
       await Promise.all(promises.map(asyncFn => asyncFn()))
       await this.$store.dispatch('setValue', { pokemons })
       // app is ready to be displayed !
+      this.pokemonList = this.pokemons
       this.ready = true
       this.$nuxt.$emit('ready')
     },
