@@ -61,17 +61,17 @@ const state = () => ({
     },
     {
       type: 'rock',
-      background: 'bg-gray-300',
-      icon: 'bg-gray-500',
-      text: 'text-gray-500',
-      hover: 'bg-gray-700'
+      background: 'bg-yellow-600',
+      icon: 'bg-yellow-800',
+      text: 'text-white',
+      hover: 'bg-yellow-900'
     },
     {
       type: 'psychic',
-      background: 'bg-pink-200',
-      icon: 'bg-pink-400',
-      text: 'text-pink-400',
-      hover: 'bg-pink-600'
+      background: 'bg-pink-400',
+      icon: 'bg-pink-600',
+      text: 'text-pink-600',
+      hover: 'bg-pink-800'
     },
     {
       type: 'fighting',
@@ -81,11 +81,53 @@ const state = () => ({
       hover: 'bg-red-600'
     },
     {
-      type: 'other',
+      type: 'normal',
       background: 'bg-gray-200',
       icon: 'bg-gray-400',
       text: 'text-gray-400',
       hover: 'bg-gray-600'
+    },
+    {
+      type: 'fairy',
+      background: 'bg-pink-200',
+      icon: 'bg-pink-400',
+      text: 'text-pink-400',
+      hover: 'bg-pink-600'
+    },
+    {
+      type: 'flying',
+      background: 'bg-indigo-200',
+      icon: 'bg-indigo-400',
+      text: 'text-indigo-400',
+      hover: 'bg-indigo-600'
+    },
+    {
+      type: 'ice',
+      background: 'bg-blue-100',
+      icon: 'bg-blue-300',
+      text: 'text-blue-300',
+      hover: 'bg-blue-500'
+    },
+    {
+      type: 'steel',
+      background: 'bg-gray-400',
+      icon: 'bg-gray-600',
+      text: 'text-gray-600',
+      hover: 'bg-gray-800'
+    },
+    {
+      type: 'dragon',
+      background: 'bg-indigo-600',
+      icon: 'bg-indigo-800',
+      text: 'text-indigo-800',
+      hover: 'bg-indigo-900'
+    },
+    {
+      type: 'dark',
+      background: 'bg-gray-600',
+      icon: 'bg-gray-800',
+      text: 'text-gray-800',
+      hover: 'bg-gray-900'
     }
   ]
 })

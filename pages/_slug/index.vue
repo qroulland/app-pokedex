@@ -19,6 +19,18 @@ export default {
     Hero,
     Details
   },
+  head () {
+    return {
+      title: `My Pokedex - ${this.pokemon.name.charAt(0).toUpperCase() + this.pokemon.name.slice(1)}`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Build your own squad and inform yourself about all pokemon\'s data.'
+        }
+      ]
+    }
+  },
   async asyncData ({ params, error }) {
     try {
       const pokemon = await getPokemonInfo(params.slug)

@@ -48,6 +48,18 @@ export default {
       pokemonList: []
     }
   },
+  head () {
+    return {
+      title: 'My Pokedex',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Build your own squad and inform yourself about all pokemon\'s data.'
+        }
+      ]
+    }
+  },
   computed: {
     ...mapGetters({
       pokemons: 'getPokemons',

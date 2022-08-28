@@ -28,7 +28,7 @@
         height="24"
         class="mr-2"
       >
-      {{ type }}
+      {{ type.charAt(0).toUpperCase() + type.slice(1) }}
     </div>
   </div>
 </template>
