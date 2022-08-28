@@ -1,9 +1,16 @@
 <template>
   <div
-    class="flex flex-col w-full items-center md:mt-20"
+    class="flex flex-col w-full items-center md:mt-20 md:mb-8"
   >
     <Hero :prevPokemon="prevPokemon" :pokemon="pokemon" :nextPokemon="nextPokemon" :getColor="getColor" />
     <Details :pokemon="pokemon" :color="getColor ('text', pokemon.types[0])" />
+    <div
+      class="text-white p-3 rounded-md cursor-pointer bg-yellow-400 mt-8 flex items-center hover:bg-yellow-500"
+      @click="addInMyTeam(pokemon)"
+    >
+      <span class="mr-1 text-3xl font-bold -mt-1">+</span>
+      Add to my team
+    </div>
   </div>
 </template>
 
@@ -53,7 +60,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      types: 'getTypes'
+      types: 'getTypes',
+      team: 'getTeam'
     })
   },
   created () {
@@ -69,6 +77,10 @@ export default {
 
       const type = this.types.find(type => type.type === pokemonType)
       return type ? type[elt] : other[elt]
+    },
+    async addInMyTeam (pokemon) {
+      pokemon.sprite = pokemon.sprites.front_default
+      await this.$store.dispatch('setValue', { team: [...this.team, pokemon] })
     }
   }
 }

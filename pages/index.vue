@@ -85,6 +85,10 @@ export default {
       this.$nuxt.$on('filterByTypes', (payload) => {
         this.pokemonList = this.getPokemonsByTypes(payload)
       })
+
+      this.$nuxt.$on('deleteInMyTeam', (payload) => {
+        this.deleteInMyTeam(payload)
+      })
     }
   },
   methods: {

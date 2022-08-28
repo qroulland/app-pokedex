@@ -16,8 +16,9 @@
           alt="Pokemon"
           width="75"
           height="75"
-          class="z-20 w-12 h-12 md:w-24 md:h-24"
+          class="z-20 w-12 h-12 md:w-24 md:h-24 cursor-pointer"
           :class="team[elt - 1] ? 'block' : 'hidden'"
+          @click="deleteInMyTeam(team[elt - 1])"
         >
       </client-only>
       <img
@@ -38,6 +39,11 @@ export default {
     team: {
       type: Array,
       default: () => ([])
+    }
+  },
+  methods: {
+    deleteInMyTeam (pokemon) {
+      this.$nuxt.$emit('deleteInMyTeam', pokemon)
     }
   }
 }
